@@ -37,9 +37,9 @@ app.get('/api/users', async (req,res) => {
 
 app.post('/api/users/:_id/exercises', async (req,res) => {
   const { description , duration } = req.body;
-  var today = moment(new Date()).format('YYYY-MM-DD[T00:00:00.000Z]');
-  var reqDate = moment(new Date(req.body.date)).format('YYYY-MM-DD[T00:00:00.000Z]');
-  let date = new Date(req.body.date) != 'Invalid Date' ? new Date(reqDate) : new Date(today);
+  // var today = moment(new Date()).format('YYYY-MM-DD[T00:00:00.000Z]');
+  // var reqDate = moment(new Date(req.body.date)).format('YYYY-MM-DD[T00:00:00.000Z]');
+  let date = new Date(req.body.date) != 'Invalid Date' ? new Date(req.body.date) : new Date();
   const id = req.params['_id'];
   const updatedUserDoc = await usersDB.findById(id);
   if (updatedUserDoc) {
@@ -89,6 +89,7 @@ app.get('/api/users/:_id/logs', async (req,res) => {
   const userLogsData = await logsDB.find(filter, 'description duration date -_id').limit(limit);
   console.log(`user logs: ${userLogsData}`);
   const userLogsDataConverted = userLogsData.map((log) => {
+    console.log(typeof log.date.toDateString());
     return {
       description : log.description,
       duration : log.duration,
