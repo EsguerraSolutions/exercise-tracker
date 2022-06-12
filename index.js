@@ -23,7 +23,10 @@ app.post('/api/users', async (req,res) => {
     username , count : 0
   };
   const newUserDoc = await usersDB.create(newUser);
-  return res.json(newUserDoc);
+  return res.json({
+    username: newUserDoc.username,
+    _id: newUserDoc._id
+  });
 });
 
 app.get('/api/users', async (req,res) => {
@@ -35,9 +38,10 @@ app.post('/api/users/:_id/exercises', async (req,res) => {
   console.log(req.body);
   const { description , duration } = req.body;
   const date = req.body.date != '' ? new Date(req.body.date) : new Date();
-  const id = req.body[':_id'];
-  const updatedUserDoc = await usersDB.findOne({_id : id});
-
+  const id = req[body][':_id'];
+  console.log(id);
+  const updatedUserDoc = await usersDB.findById(id);
+  console.log(updatedUserDoc);
   if (updatedUserDoc) {
     const newLog = {
       userID : updatedUserDoc.id,
