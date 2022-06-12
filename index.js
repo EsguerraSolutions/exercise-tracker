@@ -68,8 +68,8 @@ app.get('/api/users/:_id/logs', async (req,res) => {
   const id = req.params['_id'];
   const userInfo = await usersDB.findOne({_id : id},'-__v');
   const {from , to , limit} = req.query;
-  const gte = new Date(from);
-  const lte = new Date(to);
+  // const gte = new Date(from);
+  // const lte = new Date(to);
   let filter = {};
   // if (gte != 'Invalid Date' && lte != 'Invalid Date') {
   //   filter = { 
