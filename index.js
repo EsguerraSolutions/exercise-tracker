@@ -93,7 +93,7 @@ app.get('/api/users/:_id/logs', async (req,res) => {
     return {
       description : log.description,
       duration : log.duration,
-      date : log.date.toString()  
+      date : 'dateString'//log.date.toDateString()  
     }
   })
   const userLogs = {
