@@ -35,27 +35,35 @@ app.get('/api/users', async (req,res) => {
 });
 
 app.post('/api/users/:_id/exercises', async (req,res) => {
+  console.log(req.body);
   const { description , duration } = req.body;
   const date = req.body.date != '' ? new Date(req.body.date) : new Date();
   const id = req.body[':_id'];
   const updatedUserDoc = await usersDB.findOne({_id : id});
-  const newLog = {
-    userID : updatedUserDoc.id,
-    description,
-    duration,
-    date
-  };
-  const newLogDoc = await logsDB.create(newLog);
-  if (newLogDoc) {
-    await usersDB.updateOne({_id : id}, {count: updatedUserDoc.count + 1});
+
+  if (updatedUserDoc) {
+    const newLog = {
+      userID : updatedUserDoc.id,
+      description,
+      duration,
+      date
+    };
+    const newLogDoc = await logsDB.create(newLog);
+    if (newLogDoc) {
+      await usersDB.updateOne({_id : id}, {count: updatedUserDoc.count + 1});
+    }
+    return res.json({
+      username : updatedUserDoc.username,
+      description : newLogDoc.description,
+      duration : newLogDoc.duration,
+      date : newLogDoc.date.toDateString(),
+      _id : newLogDoc.userID
+    });
   }
-  return res.json({
-    username : updatedUserDoc.username,
-    description : newLogDoc.description,
-    duration : newLogDoc.duration,
-    date : newLogDoc.date.toDateString(),
-    _id : newLogDoc.userID
-  });
+
+  else {
+    return res.json({error : 'Invalid ID'});
+  }
 });
 
 app.get('/api/users/:_id/logs', async (req,res) => {
