@@ -87,11 +87,19 @@ app.get('/api/users/:_id/logs', async (req,res) => {
     filter = { userID : id }
   }
   const userLogsData = await logsDB.find(filter, 'description duration date -_id').limit(limit);
+  console.log(`user logs: ${userLogsData}`);
+  const userLogsDataConverted = userLogsData.map((log) => {
+    return {
+      description : log.description,
+      duration : log.duration,
+      date : log.date.toDateString()  
+    }
+  })
   const userLogs = {
     username : userInfo.username,
     count : userInfo.count,
     '_id' : userInfo._id,
-    log : userLogsData
+    log : userLogsDataConverted
   };
   console.log(userLogs);
   return res.json(userLogs);
