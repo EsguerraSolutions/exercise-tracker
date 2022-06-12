@@ -39,7 +39,7 @@ app.post('/api/users/:_id/exercises', async (req,res) => {
   const { description , duration } = req.body;
   // var today = moment(new Date()).format('YYYY-MM-DD[T00:00:00.000Z]');
   // var reqDate = moment(new Date(req.body.date)).format('YYYY-MM-DD[T00:00:00.000Z]');
-  if (req.body.date == '') {
+  if (req.body.date != '' && new Date(req.body.date) != 'Invalid Date') {
     return res.send({}.toString());
   }
   let date = new Date(req.body.date) != 'Invalid Date' ? new Date(req.body.date) : new Date();
