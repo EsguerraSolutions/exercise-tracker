@@ -83,7 +83,7 @@ app.get('/api/users/:_id/logs', async (req,res) => {
   // else {
     filter = { userID : id }
   // }
-  const userLogsData = await logsDB.find(filter, 'description duration date -_id').limit(limit);
+  const userLogsData = await logsDB.find(filter, 'description duration -_id').limit(limit);
   const userLogs = {
     username : userInfo.username,
     count : userInfo.count,
