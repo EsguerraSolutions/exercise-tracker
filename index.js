@@ -38,7 +38,7 @@ app.post('/api/users/:_id/exercises', async (req,res) => {
   console.log(req.body);
   const { description , duration } = req.body;
   const date = req.body.date != '' ? new Date(req.body.date) : new Date();
-  const id = req[body][':_id'];
+  const id = req.body[':_id'];
   console.log(id);
   const updatedUserDoc = await usersDB.findById(id);
   console.log(updatedUserDoc);
