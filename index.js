@@ -36,7 +36,7 @@ app.get('/api/users', async (req,res) => {
 
 app.post('/api/users/:_id/exercises', async (req,res) => {
   const { description , duration } = req.body;
-  const date = req.body.date != '' ? new Date(req.body.date) : new Date();
+  const date = new Date(req.body.date) != 'Invalid Date' ? new Date(req.body.date) : new Date();
   const id = req.params['_id'];
   const updatedUserDoc = await usersDB.findById(id);
   if (updatedUserDoc) {
@@ -83,7 +83,7 @@ app.get('/api/users/:_id/logs', async (req,res) => {
   // else {
     filter = { userID : id }
   // }
-  const userLogsData = await logsDB.find(filter, 'description duration -_id').limit(limit);
+  const userLogsData = await logsDB.find(filter, 'description duration date -_id').limit(limit);
   const userLogs = {
     username : userInfo.username,
     count : userInfo.count,
