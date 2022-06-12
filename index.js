@@ -1,6 +1,7 @@
-const express = require('express')
-const app = express()
-const cors = require('cors')
+const express = require('express');
+const app = express();
+const cors = require('cors');
+const moment = require('moment');
 const {mongoConnect} = require('./mongo');
 
 const usersDB = require('./users.model');
@@ -36,7 +37,9 @@ app.get('/api/users', async (req,res) => {
 
 app.post('/api/users/:_id/exercises', async (req,res) => {
   const { description , duration } = req.body;
-  const date = new Date(req.body.date) != 'Invalid Date' ? new Date(req.body.date) : new Date();
+  var today = moment(new Date()).format('YYYY-MM-DD[T00:00:00.000Z]');
+  var reqDate = moment(new Date(req.body.date)).format('YYYY-MM-DD[T00:00:00.000Z]');
+  let date = new Date(req.body.date) != 'Invalid Date' ? new Date(reqDate) : new Date(today);
   const id = req.params['_id'];
   const updatedUserDoc = await usersDB.findById(id);
   if (updatedUserDoc) {
