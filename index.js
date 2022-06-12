@@ -57,7 +57,7 @@ app.post('/api/users/:_id/exercises', async (req,res) => {
       username : updatedUserDoc.username,
       description : newLogDoc.description,
       duration : newLogDoc.duration,
-      date : newLogDoc.date.toDateString(),
+      date : newLogDoc.date.toString(),
       _id : newLogDoc.userID
     });
   }
