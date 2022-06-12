@@ -71,18 +71,18 @@ app.get('/api/users/:_id/logs', async (req,res) => {
   const gte = new Date(from);
   const lte = new Date(to);
   let filter = {};
-  if (gte != 'Invalid Date' || lte != 'Invalid Date') {
-    filter = { 
-      userID : id,
-      date: {
-        $gte: gte,
-        $lte : lte
-      }}
-  }
+  // if (gte != 'Invalid Date' && lte != 'Invalid Date') {
+  //   filter = { 
+  //     userID : id,
+  //     date: {
+  //       $gte: gte,
+  //       $lte : lte
+  //     }}
+  // }
 
-  else {
+  // else {
     filter = { userID : id }
-  }
+  // }
   const userLogsData = await logsDB.find(filter, 'description duration date -_id').limit(limit);
   const userLogs = {
     username : userInfo.username,
