@@ -35,13 +35,10 @@ app.get('/api/users', async (req,res) => {
 });
 
 app.post('/api/users/:_id/exercises', async (req,res) => {
-  console.log(req.body);
-  console.log(req.params);
   const { description , duration } = req.body;
   const date = req.body.date != '' ? new Date(req.body.date) : new Date();
   const id = req.params['_id'];
   const updatedUserDoc = await usersDB.findById(id);
-  console.log(updatedUserDoc);
   if (updatedUserDoc) {
     const newLog = {
       userID : updatedUserDoc.id,
@@ -74,7 +71,7 @@ app.get('/api/users/:_id/logs', async (req,res) => {
   const gte = new Date(from);
   const lte = new Date(to);
   let filter = {};
-  if (gte != 'Invalid Date' && lte != 'Invalid Date') {
+  if (gte != 'Invalid Date' || lte != 'Invalid Date') {
     filter = { 
       userID : id,
       date: {
