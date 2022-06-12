@@ -57,7 +57,7 @@ app.post('/api/users/:_id/exercises', async (req,res) => {
       username : updatedUserDoc.username,
       description : newLogDoc.description,
       duration : newLogDoc.duration,
-      date : newLogDoc.date.toString(),
+      date : newLogDoc.date.toDateString(),
       _id : newLogDoc.userID
     });
   }
@@ -89,11 +89,11 @@ app.get('/api/users/:_id/logs', async (req,res) => {
   const userLogsData = await logsDB.find(filter, 'description duration date -_id').limit(limit);
   console.log(`user logs: ${userLogsData}`);
   const userLogsDataConverted = userLogsData.map((log) => {
-    console.log(typeof log.date.toDateString());
+    console.log(typeof log.date.toString());
     return {
       description : log.description,
       duration : log.duration,
-      date : log.date.toDateString()  
+      date : log.date.toString()  
     }
   })
   const userLogs = {
