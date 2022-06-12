@@ -23,10 +23,7 @@ app.post('/api/users', async (req,res) => {
     username , count : 0
   };
   const newUserDoc = await usersDB.create(newUser);
-  return res.json({
-    username : newUserDoc.username,
-    _id: newUserDoc._id
-  });
+  return res.json(newUserDoc);
 });
 
 app.get('/api/users', async (req,res) => {
